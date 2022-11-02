@@ -1,6 +1,6 @@
 #include "strutil.h"
 
-namespace strutil {
+namespace strutil::sv {
 
 std::vector<std::string_view> splitSV(const std::string& str, const std::string& delims) {
     auto svStr = std::string_view(str);
@@ -26,6 +26,22 @@ std::vector<std::string_view> splitSV(std::string_view strv, std::string_view de
     }
 
     return output;
+}
+
+}
+
+namespace strutil::ss {
+
+std::vector<std::string> splitSV(const std::string& str, const std::string& delim) {
+    std::vector<std::string> ret;
+    std::size_t start, end = -1 * delim.size();
+    do {
+        start = end + delim.size();
+        end = str.find(delim, start);
+        ret.emplace_back(str.substr(start, end - start));
+    } while(end != -1);
+
+    return ret;
 }
 
 }
